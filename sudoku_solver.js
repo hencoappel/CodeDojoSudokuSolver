@@ -26,9 +26,20 @@ function display(grid) {
 function toString(grid) {
 	var s = "<table>";
 	for (var y=0; y<9; y++) {
-		s += "<tr>"
+		if (y == 3 || y == 6) {
+			s += "<tr class='vline'>"
+		}
+		else {
+			s += "<tr>"
+		}
 		for (var x=0; x<9; x++) {
-			s += "<td>" + grid[x][y] + "</td>";
+			if (x == 3 || x == 6) {
+				s += "<td class='hline'>";
+			}
+			else {
+				s += "<td>";
+			}
+			s += grid[x][y] + "</td>";
 		}
 		s += "<tr/>";
 	}

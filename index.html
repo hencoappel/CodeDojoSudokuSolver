@@ -3,10 +3,30 @@
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 	<script type="text/javascript" src="sudoku_solver.js"></script>
 
+	<style>
+		table {
+			font-size: 32px;
+			font-family: "Lucida Console", Monaco, monospace;
+			border-collapse: collapse;
+		}
+		td {
+			padding: 0px;
+			margin: 0px;
+			height: 40px;
+			width: 40px;
+			text-align: center;
+		}
+		tr.vline > td {
+			border-top: 3px solid silver;
+		}
+		td.hline {
+			border-left: 3px solid silver;
+		}
+	</style>
 
 </head>
 <body>
-	<h1>Our sudoku solver</h1>
+	<h1>Superior (looking) Sudoku Solver</h1>
 	<div id="sudo"></div>
 </body>
 <html>
