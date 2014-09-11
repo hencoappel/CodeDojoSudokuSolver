@@ -1,5 +1,5 @@
 $(document).ready(function() {
-	$('#view').innerhtml = "your mom";
+	$('#view').innerhtml = "";
 	var g = getSampleGrid();
 	display(g);
 	solve(g);
