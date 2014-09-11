@@ -1,19 +1,23 @@
-$(document).ready(function() {
-	var g = getSampleGrid();
-	display(g);
-	solve(g);
-});
+//$(document).ready(function() {
+//	var g = getSampleGrid();
+//	display(g);
+//	solve(g);
+//});
+
+var b = 1;
+var g = getSampleGrid();
+solve(g);
 
 function check_valid(board, x, y, number) {
-    for(i=0; i<9;i++ ){
-        if(board[x][i] === number || board[i][y] === number){
+    for (var i = 0; i < 9; i++) {
+        if (board[x][i] === number || board[i][y] === number) {
             return false;
         }
         var box_x = x - (x % 3);
         var box_y = y - (y % 3);
-        for (var i = 0; i < 3; i++) {
-            for (var i = 0; i < 3; i++) {
-                if(board[box_x+i][box_y+j] === number) {
+        for (var j = 0; j < 3; j++) {
+            for (var k = 0; k < 3; k++) {
+                if (board[box_x + k][box_y + k] === number) {
                     return false;
                 }
             }
@@ -23,7 +27,7 @@ function check_valid(board, x, y, number) {
 }
 
 function solve(grid) {
-	solved = solve_rec(grid,0,0);
+	solved = solve_rec(grid,0,0, 1);
 	print(solved);
 }
 
@@ -31,20 +35,19 @@ function clone(array) {
 	return JSON.parse(JSON.stringify(array));
 }
 
-function solve_rec(grid, x, y) {
+function solve_rec(grid, x, y, l) {
 	x = x === 8 ? 0 : x;
-	y = x === 8 ? y + 1 : y;
+	y = x === 0 ? y + 1 : y;
 	// base case - gone through all
-	if (y < 9) {
-		print("reached the end")
-		return solve_rec_base(grid);
+	if (y === 9) {
+		return solve_rec_base(grid,l);
 	}
 	// this cell is empty
 	if (grid[x][y] === 0) {
-		return solve_rec_empty_cell(grid, x, y);
+		return solve_rec_empty_cell(grid, x, y, l);
 	} else {
 		// already filled it, move on
-		return solve_rec(grid, x+1, y);
+		return solve_rec(grid, x+1, y, l+1);
 	}
 }
 
@@ -52,25 +55,31 @@ function print(obj) {
 	console.log(obj);
 }
 
-function solve_rec_empty_cell(grid, x, y) {
+function solve_rec_empty_cell(grid, x, y, l) {
 	for(var i = 0; i < 9; i++) {
 		if(check_valid(grid, x, y)) {
+			if(l<50){
+				print(l)
+			}
 			var temp_grid = clone(grid);
 			temp_grid[x][y] = i;
-			var new_grid = solve_rec(temp_grid, x+1, y);
+			var new_grid = solve_rec(temp_grid, x+1, y, l+1);
 			if (new_grid) { // solved, return
 				return new_grid;
+			} else {
+				//print([x,y,i]);
 			}
 		}
 	}
+	//print("testing");
+	return null;
 }
 
-function solve_rec_base(grid) {
+function solve_rec_base(grid, l) {
 	for(var i = 0; i < 9; i++) {
 		for(var j = 0; j < 9; j++) {
 			if (grid[i][j] === 0) {
-				print("missing an element");
-					//return null;
+				return null;
 			}
 		}
 	}
