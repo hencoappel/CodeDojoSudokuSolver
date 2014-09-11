@@ -24,7 +24,7 @@ function check_valid(board, x, y, number) {
 
 function solve(grid) {
 	solved = solve_rec(grid,0,0);
-	console.log(solved);
+	print(solved);
 }
 
 function clone(array) {
@@ -36,6 +36,7 @@ function solve_rec(grid, x, y) {
 	y = x === 8 ? y + 1 : y;
 	// base case - gone through all
 	if (y < 9) {
+		print("reached the end")
 		return solve_rec_base(grid);
 	}
 	// this cell is empty
@@ -45,6 +46,10 @@ function solve_rec(grid, x, y) {
 		// already filled it, move on
 		return solve_rec(grid, x+1, y);
 	}
+}
+
+function print(obj) {
+	console.log(obj);
 }
 
 function solve_rec_empty_cell(grid, x, y) {
@@ -64,7 +69,7 @@ function solve_rec_base(grid) {
 	for(var i = 0; i < 9; i++) {
 		for(var j = 0; j < 9; j++) {
 			if (grid[i][j] === 0) {
-				console.log("missing an element");
+				print("missing an element");
 					//return null;
 			}
 		}
