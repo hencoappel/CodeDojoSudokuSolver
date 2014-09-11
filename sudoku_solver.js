@@ -22,6 +22,25 @@ function check_valid(board, x, y, number) {
     return true;
 }
 
+function solve(grid) {
+	solved = solve_rec(grid,0,0)
+}
+
+function solve_rec(grid, x, y){
+	if(grid[x][y]===0){
+		for(var i=0;i<9;i++){
+//			if(check_valid(grid,x,y,))
+
+		}
+	}
+	if(grid[x][y]!==0 && x){
+		var new_x = x===8?0:x+1;
+		var new_y = x===8?y+1:y;
+		grid = solve_rec(grid,new_x,new_y);
+	}
+}
+
+
 function get_sample_grid() {
 	var sample_grid = createEmptyGrid();
 	sample_grid[2][0] = -2;
