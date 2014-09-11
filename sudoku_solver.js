@@ -1,5 +1,4 @@
 $(document).ready(function() {
-	$('#view').innerhtml = "";
 	var g = getSampleGrid();
 	display(g);
 	solve(g);
@@ -108,25 +107,21 @@ function display(grid) {
 }
 
 function getStringForPos(grid, x, y) {
-	if(grid[x][y]===0){
-		return "";
-	}
-	return Math.abs(grid[x][y]);
+	return grid[x][y]===0 ? "" : grid[x][y];
 }
+
 function toString(grid) {
 	var s = "<table>";
 	for (var y=0; y<9; y++) {
 		if (y == 3 || y == 6) {
 			s += "<tr class='vline'>"
-		}
-		else {
+		} else {
 			s += "<tr>"
 		}
 		for (var x=0; x<9; x++) {
 			if (x == 3 || x == 6) {
 				s += "<td class='hline'>";
-			}
-			else {
+			} else {
 				s += "<td>";
 			}
 			s += getStringForPos(grid,x,y) + "</td>";
