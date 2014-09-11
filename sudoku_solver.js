@@ -86,12 +86,29 @@ function display(grid) {
 	$('#sudo').html(toString(grid));
 }
 
+function getStringForPos(grid, x, y) {
+	if(grid[x][y]===0){
+		return "";
+	}
+	return Math.abs(grid[x][y]);
+}
 function toString(grid) {
 	var s = "<table>";
 	for (var y=0; y<9; y++) {
-		s += "<tr>"
+		if (y == 3 || y == 6) {
+			s += "<tr class='vline'>"
+		}
+		else {
+			s += "<tr>"
+		}
 		for (var x=0; x<9; x++) {
-			s += "<td>" + Math.abs(grid[x][y]) + "</td>";
+			if (x == 3 || x == 6) {
+				s += "<td class='hline'>";
+			}
+			else {
+				s += "<td>";
+			}
+			s += getStringForPos(grid,x,y) + "</td>";
 		}
 		s += "<tr/>";
 	}
