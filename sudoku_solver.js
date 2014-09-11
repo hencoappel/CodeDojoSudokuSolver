@@ -7,14 +7,14 @@ $(document).ready(function() {
 
 function check_valid(board, x, y, number) {
     for(i=0; i<9;i++ ){
-        if(Math.abs(board[x][i]) === number || Math.abs(board[i][y]) === number){
+        if(board[x][i] === number || board[i][y] === number){
             return false;
         }
         var box_x = x - (x % 3);
         var box_y = y - (y % 3);
         for (var i = 0; i < 3; i++) {
             for (var i = 0; i < 3; i++) {
-                if(Math.abs(board[box_x+i][box_y+j]) == number) {
+                if(board[box_x+i][box_y+j] === number) {
                     return false;
                 }
             }
