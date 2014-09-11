@@ -1,7 +1,8 @@
 $(document).ready(function() {
 	$('#view').innerhtml = "your mom";
-	var g = get_sample_grid();
+	var g = getSampleGrid();
 	display(g);
+	solve(g);
 });
 
 function check_valid(board, x, y, number) {
@@ -23,67 +24,68 @@ function check_valid(board, x, y, number) {
 }
 
 function solve(grid) {
-	solved = solve_rec(grid,0,0)
+	solved = solve_rec(grid,0,0);
+	console.log(solved);
 }
 
-function solve_rec(grid, x, y){
-	if(grid[x][y]===0){
-		for(var i=0;i<9;i++){
-//			if(check_valid(grid,x,y,))
+function clone(array) {
+	return JSON.parse(JSON.stringify(array));
+}
 
+function solve_rec(grid, x, y) {
+	x = x === 8 ? 0 : x;
+	y = x === 8 ? y + 1 : y;
+	// base case - gone through all
+	if (y < 9) {
+		return solve_rec_base(grid);
+	}
+	// this cell is empty
+	if (grid[x][y] === 0) {
+		return solve_rec_empty_cell(grid, x, y);
+	} else {
+		// already filled it, move on
+		return solve_rec(grid, x+1, y);
+	}
+}
+
+function solve_rec_empty_cell(grid, x, y) {
+	for(var i = 0; i < 9; i++) {
+		if(check_valid(grid, x, y)) {
+			var temp_grid = clone(grid);
+			temp_grid[x][y] = i;
+			var new_grid = solve_rec(temp_grid, x+1, y);
+			if (new_grid) { // solved, return
+				return new_grid;
+			}
 		}
 	}
-	if(grid[x][y]!==0 && x){
-		var new_x = x===8?0:x+1;
-		var new_y = x===8?y+1:y;
-		grid = solve_rec(grid,new_x,new_y);
-	}
 }
 
+function solve_rec_base(grid) {
+	for(var i = 0; i < 9; i++) {
+		for(var j = 0; j < 9; j++) {
+			if (grid[i][j] === 0) {
+				console.log("missing an element");
+					//return null;
+			}
+		}
+	}
+	return grid;
+}
 
-function get_sample_grid() {
-	var sample_grid = createEmptyGrid();
-	sample_grid[2][0] = -2;
-	sample_grid[3][0] = -6;
-	sample_grid[6][0] = -5;
-	sample_grid[7][0] = -9;
-	sample_grid[8][0] = -8;
-	sample_grid[0][1] = -4;
-	sample_grid[2][1] = -3;
-	sample_grid[4][1] = -8;
-	sample_grid[7][1] = -3;
-	sample_grid[0][2] = -5;
-	sample_grid[1][2] = -8;
-	sample_grid[3][2] = -9;
-	sample_grid[4][2] = -2;
-	sample_grid[5][2] = -7;
-	sample_grid[8][2] = -4;
-	sample_grid[2][3] = -9;
-	sample_grid[4][3] = -4;
-	sample_grid[1][4] = -4;
-	sample_grid[2][4] = -7;
-	sample_grid[3][4] = -2;
-	sample_grid[4][4] = -5;
-	sample_grid[6][4] = -8;
-	sample_grid[7][4] = -3;
-	sample_grid[8][4] = -1;
-	sample_grid[4][5] = -7;
-	sample_grid[6][5] = -6;
-	sample_grid[0][6] = -7;
-	sample_grid[3][6] = -4;
-	sample_grid[4][6] = -6;
-	sample_grid[5][6] = -2;
-	sample_grid[7][6] = -5;
-	sample_grid[8][6] = -3;
-	sample_grid[1][7] = -6;
-	sample_grid[4][7] = -1;
-	sample_grid[6][7] = -4;
-	sample_grid[8][7] = -2;
-	sample_grid[0][8] = -2;
-	sample_grid[1][8] = -3;
-	sample_grid[2][8] = -4;
-	sample_grid[5][8] = -5;
-	sample_grid[6][8] = -8;
+function getSampleGrid() {
+	var sample_grid = [
+	   //0 1 2 3 4 5 6 7 8
+		[0,0,2,6,0,0,5,9,8],//0
+		[4,0,3,0,8,0,0,3,0],//1
+		[5,8,0,9,2,7,0,0,4],//2
+		[0,0,9,0,4,0,0,0,0],//3
+		[0,4,7,2,5,0,8,3,1],//4
+		[0,0,0,0,7,0,6,0,0],//5
+		[7,0,0,4,6,2,0,5,3],//6
+		[0,6,0,0,1,0,4,0,2],//7
+		[0,3,4,0,0,5,8,0,0],//8
+	];
 	return sample_grid;
 }
 
